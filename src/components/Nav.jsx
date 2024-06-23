@@ -1,9 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import { useContext } from "react";
+import { Tooltip } from "react-tooltip";
 
 const Nav = () => {
-  const { user } = useContext(AuthContext);
+  const { user, signOutUser } = useContext(AuthContext);
+
   console.log(user);
 
   const navLinks = (
@@ -87,6 +89,35 @@ const Nav = () => {
           <NavLink to="/login" className="btn">
             Login
           </NavLink>
+        )}
+
+        {user && (
+          <>
+            <img
+              src={user?.photoURL}
+              data-tooltip-id="my-tooltip"
+              // data-tooltip-content={`
+
+              //   `}
+              data-tooltip-delay-hide={2000}
+              className="w-11 h-11 rounded-full object-cover"
+            />
+
+            <Tooltip id="my-tooltip" className="bg-primary p-5">
+              <div className="space-y-4">
+                <h3>{user?.displayName}</h3>
+                <button
+                  className="btn btn-error"
+                  onClick={() => {
+                    signOutUser();
+                    console.log("works or not");
+                  }}
+                >
+                  SignOut
+                </button>
+              </div>
+            </Tooltip>
+          </>
         )}
       </div>
     </div>

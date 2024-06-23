@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#my-tooltip {
+  background-color: #333;
+  padding: 1rem;
+  pointer-events: auto;
+}
