@@ -4,8 +4,18 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../Providers/AuthProvider";
 
 const Signup = () => {
-  const { signUpWithEmailAndPassword, signInWithGoogle, signInWithGithub } =
-    useContext(AuthContext);
+  const {
+    user,
+    setUser,
+    signUpWithEmailAndPassword,
+    signInWithGoogle,
+    signInWithGithub,
+    updateUserProfile,
+  } = useContext(AuthContext);
+
+  const [us, setUs] = useState(null);
+  const [test, setTest] = useState(null);
+  console.log("test is now", test);
   const [errorMessage, setErrorMessage] = useState("");
   const [isMinLength, setIsMinLength] = useState(false);
   const [hasUppercase, setHasUppercase] = useState(false);
@@ -48,7 +58,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
-    const name = form.get("fullname");
+    const displayName = form.get("fullname");
     const email = form.get("email");
     const password = form.get("password");
     const photoURL = form.get("photoURL");
@@ -69,9 +79,12 @@ const Signup = () => {
     }
     signUpWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        userCredential.user.displayName = name;
-        userCredential.user.photoURL = photoURL;
-        console.log(userCredential.user);
+        setUs(userCredential.user);
+        // console.log(userCredential.user);
+        setTest("something else");
+        // console.log({ displayName, photoURL });
+
+        us && updateUserProfile({ displayName, photoURL });
         navigate(navigate.state ? navigate.state : "/");
       })
       .catch((error) => {
@@ -80,30 +93,29 @@ const Signup = () => {
   };
 
   return (
-    <div className="py-8 flex flex-col bg-no-repeat bg-cover bg-[url(/blob3.svg)]">
-      <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-        <div className="px-6 py-5 rounded text-black w-full relative">
-          <h1 className="mb-8 text-3xl text-center">Sign up</h1>
+    <div className="py-8">
+      <button
+        onClick={() => {
+          setUs("laura react");
+        }}
+      >
+        Test
+      </button>
+      <div className="max-w-lg mx-auto flex-1 flex flex-col items-stretch justify-stretch">
+        <div className="rounded text-black w-full relative">
+          <h1 className="mb-6 text-3xl text-center">Sign up</h1>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
+              className="block border w-full p-3 rounded-lg mb-4"
               name="fullname"
               placeholder="Full Name"
               required
             />
 
-            {/* <input
-              type="file"
-              className="file-input mb-4 file-input-bordered file-input-secondary w-full max-w-xs"
-              onChange={(event) => {
-                setImageUpload(event.target.files[0]);
-              }}
-              required
-            /> */}
             <input
               type="email"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
+              className="block border w-full p-3 rounded mb-4"
               name="email"
               required
               placeholder="Email"
@@ -111,7 +123,7 @@ const Signup = () => {
             <input
               type={!showPassword ? "password" : "text"}
               onChange={handlePasswordChange}
-              className="block border border-grey-light w-full p-3 rounded mb-4"
+              className="block border w-full p-3 rounded mb-4"
               name="password"
               placeholder="Password"
               required
@@ -120,17 +132,18 @@ const Signup = () => {
             <input
               type="text"
               placeholder="Photo URL"
-              className="input input-bordered w-full max-w-xs mb-4"
+              className="input input-bordered w-full block mb-4"
               name="photoURL"
+              required
             />
             <span
-              className="absolute top-[224px] right-8 text-2xl p-2"
+              className="absolute top-[195px] right-2 text-2xl p-2"
               onClick={handleShowPassword}
             >
               {showPassword ? <FaEye /> : <FaEyeSlash />}
             </span>
 
-            <div className="flex flex-col space-y-2 pb-4">
+            <div className="flex flex-col space-y-1 text-sm pb-4">
               <div
                 className={`flex items-center ${
                   isMinLength ? "text-green-500" : "text-red-500"
@@ -159,7 +172,7 @@ const Signup = () => {
 
             <button
               type="submit"
-              className="btn btn-primary w-full text-center py-3 rounded bg-green text-white  my-1"
+              className="btn btn-primary w-full text-center py-3 text-white mb-1"
             >
               Create Account
             </button>
@@ -168,12 +181,11 @@ const Signup = () => {
           </form>
         </div>
 
-        <div className="">
-          Already have an account?
-          <Link className="text-info text-lg px-1" to="/login">
+        <div className="pt-1">
+          Already have an account? &nbsp;
+          <Link className="text-info text-lg " to="/login">
             Log in
           </Link>
-          .
         </div>
 
         <div className="divider">OR</div>
@@ -190,11 +202,13 @@ const Signup = () => {
           <span className="">SignUp with Google</span>
         </button>
         <button
-          className="btn btn-primary w-full flex items-center justify-center text-white"
+          className="btn btn-neutral w-full flex items-center justify-center text-white"
           onClick={handleGithubSignup}
         >
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Github-desktop-logo-symbol.svg/1024px-Github-desktop-logo-symbol.svg.png
+
+"
             alt=""
             className="w-8 h-8 object-cover"
           />

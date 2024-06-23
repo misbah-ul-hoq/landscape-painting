@@ -56,11 +56,11 @@ const Login = () => {
   };
   return (
     <div className="flex justify-center items-center py-8 bg-[url('/blob.svg')] bg-no-repeat bg-cover">
-      <div className="w-full max-w-md px-8 space-y-4 rounded-lg">
+      <div className="w-full max-w-lg px-2 space-y-4 rounded-lg">
         <h2 className="text-2xl font-bold text-center">Login</h2>
-        <form className="space-y-4" onSubmit={handleLogin}>
+        <form className="space-y-6" onSubmit={handleLogin}>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-left text-sm font-medium text-gray-700">
               Email
             </label>
             <input
@@ -72,7 +72,7 @@ const Login = () => {
             />
           </div>
           <div className="relative">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm text-left font-medium text-gray-700">
               Password
             </label>
             <input
@@ -95,6 +95,7 @@ const Login = () => {
             Login
           </button>
         </form>
+
         <p>
           Not have an account yet?{" "}
           <Link to="/signup" className="text-lg text-info">
@@ -103,7 +104,7 @@ const Login = () => {
         </p>
         <div className="divider">OR</div>
         <button
-          className="btn btn-neutral w-full flex items-center justify-center space-x-2 border"
+          className="btn w-full flex items-center justify-center space-x-2 border"
           onClick={handleGoogleLogin}
         >
           <img
@@ -114,11 +115,12 @@ const Login = () => {
           <span className="">Login with Google</span>
         </button>
         <button
-          className="btn btn-secondary w-full flex items-center justify-center"
+          className="btn btn-neutral w-full flex items-center justify-center"
           onClick={handleGithubLogin}
         >
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Github-desktop-logo-symbol.svg/1024px-Github-desktop-logo-symbol.svg.png
+"
             alt=""
             className="w-8 h-8 object-cover"
           />

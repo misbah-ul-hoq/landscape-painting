@@ -6,8 +6,6 @@ import { Tooltip } from "react-tooltip";
 const Nav = () => {
   const { user, signOutUser } = useContext(AuthContext);
 
-  console.log(user);
-
   const navLinks = (
     <>
       <li>
@@ -47,7 +45,7 @@ const Nav = () => {
   );
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar min-h-10 lg:min-h-16 bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
           <div
@@ -110,7 +108,6 @@ const Nav = () => {
                   className="btn btn-error"
                   onClick={() => {
                     signOutUser();
-                    console.log("works or not");
                   }}
                 >
                   SignOut
