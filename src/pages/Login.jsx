@@ -25,7 +25,7 @@ const Login = () => {
       .catch(() => {});
   };
 
-  const handleFacebookLogin = () => {
+  const handleGithubLogin = () => {
     signInWithGithub()
       .then(() => {
         navigate(location.state ? location.state : "/");
@@ -115,14 +115,14 @@ const Login = () => {
         </button>
         <button
           className="btn btn-secondary w-full flex items-center justify-center"
-          onClick={handleFacebookLogin}
+          onClick={handleGithubLogin}
         >
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
             alt=""
             className="w-8 h-8 object-cover"
           />
-          <span>Login with Facebook</span>
+          <span>Login with Github</span>
         </button>
       </div>
     </div>
