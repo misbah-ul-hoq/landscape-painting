@@ -1,8 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
+import { useContext } from "react";
 
 const Nav = () => {
-  // const { user } = useContext(AuthProvider);
-  // console.log(user);
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
   const navLinks = (
     <>
@@ -34,9 +36,11 @@ const Nav = () => {
         <NavLink to="/my-crafts">My Crafts</NavLink>
       </li>
 
-      <li>
-        <NavLink to="/signup">SignUp</NavLink>
-      </li>
+      {!user && (
+        <li>
+          <NavLink to="/signup">SignUp</NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -79,9 +83,11 @@ const Nav = () => {
         <ul className="menu menu-horizontal px-1">{navLinks}</ul>
       </div>
       <div className="navbar-end">
-        <NavLink to="/login" className="btn">
-          Login
-        </NavLink>
+        {!user && (
+          <NavLink to="/login" className="btn">
+            Login
+          </NavLink>
+        )}
       </div>
     </div>
   );
