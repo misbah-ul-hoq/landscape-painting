@@ -16,7 +16,7 @@ export const AuthContext = createContext(null);
 
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
   const signUpWithEmailAndPassword = (email, passworrd) => {
@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
 
   onAuthStateChanged(auth, (user) => {
     setUser(user);
-    setLoading(true);
+    setLoading(false);
   });
 
   const authInfo = {

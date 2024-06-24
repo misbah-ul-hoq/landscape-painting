@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
+import { baseURL } from "../functions/fetchURL";
 
-const useFetch = (
-  body = {},
-  method = "GET",
-  url = "https://practisetask-backend.vercel.app/"
-) => {
-  const [result, setResult] = useState(null);
+const useFetch = (endpoint = "", body = {}, method = "GET") => {
+  const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
     fetch(
-      url,
+      `${baseURL}/${endpoint}`,
       method != "GET" && {
         method,
         headers: {
@@ -22,13 +19,13 @@ const useFetch = (
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        setResult(data);
+        setResults(data);
       })
       .catch(() => {
         setLoading(false);
       });
-  }, [url, method, body]);
-  return { result, loading };
+  }, [method, body, endpoint]);
+  return { results, loading };
 };
 
 export default useFetch;

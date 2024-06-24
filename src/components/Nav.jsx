@@ -4,13 +4,16 @@ import { useContext, useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 
 const Nav = () => {
-  const { user, loading, signOutUser } = useContext(AuthContext);
+  const { user, signOutUser } = useContext(AuthContext);
   const [mongoUser, setMongoUser] = useState(null);
   const userEmail = user?.email;
-  console.log(loading);
+
   useEffect(() => {
     fetch(`https://practisetask-backend.vercel.app/user/${userEmail}`)
-      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
       .then((data) => {
         setMongoUser(data);
       });

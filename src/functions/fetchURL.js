@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+export const baseURL = "https://practisetask-backend.vercel.app";
 const fetchURL = (
   body = {},
   method = "GET",

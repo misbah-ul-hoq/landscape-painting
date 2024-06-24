@@ -9,9 +9,27 @@ import "./index.css";
 
 // import required modules
 import { EffectCards } from "swiper/modules";
+import { useEffect, useState } from "react";
+import { baseURL } from "../functions/fetchURL";
 
 export default function Sliders() {
-  return (
+  const [loading, setLoading] = useState(false);
+  const [arts, setArts] = useState([]);
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${baseURL}/arts`)
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(false);
+        setArts(data);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
+  return loading ? (
+    <span className="loading loading-bars loading-lg"></span>
+  ) : (
     <>
       <Swiper
         effect={"cards"}
@@ -19,15 +37,11 @@ export default function Sliders() {
         modules={[EffectCards]}
         className="mySwiper"
       >
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
+        {arts.map((result) => (
+          <SwiperSlide key={result._id} className="bg-secondary">
+            <img src={result.image} className="h-full w-full object-cover" />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );
