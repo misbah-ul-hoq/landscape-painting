@@ -5,17 +5,12 @@ import { AuthContext } from "../Providers/AuthProvider";
 
 const Signup = () => {
   const {
-    user,
-    setUser,
     signUpWithEmailAndPassword,
     signInWithGoogle,
     signInWithGithub,
     updateUserProfile,
   } = useContext(AuthContext);
 
-  const [us, setUs] = useState(null);
-  const [test, setTest] = useState(null);
-  console.log("test is now", test);
   const [errorMessage, setErrorMessage] = useState("");
   const [isMinLength, setIsMinLength] = useState(false);
   const [hasUppercase, setHasUppercase] = useState(false);
@@ -55,7 +50,7 @@ const Signup = () => {
       });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
     const displayName = form.get("fullname");
@@ -79,12 +74,6 @@ const Signup = () => {
     }
     signUpWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        setUs(userCredential.user);
-        // console.log(userCredential.user);
-        setTest("something else");
-        // console.log({ displayName, photoURL });
-
-        us && updateUserProfile({ displayName, photoURL });
         navigate(navigate.state ? navigate.state : "/");
       })
       .catch((error) => {
@@ -94,13 +83,6 @@ const Signup = () => {
 
   return (
     <div className="py-8">
-      <button
-        onClick={() => {
-          setUs("laura react");
-        }}
-      >
-        Test
-      </button>
       <div className="max-w-lg mx-auto flex-1 flex flex-col items-stretch justify-stretch">
         <div className="rounded text-black w-full relative">
           <h1 className="mb-6 text-3xl text-center">Sign up</h1>
