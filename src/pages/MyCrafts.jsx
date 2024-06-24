@@ -21,7 +21,7 @@ const MyCrafts = () => {
   return loading ? (
     <span className="loading loading-spinner loading-lg"></span>
   ) : (
-    <section className="my-crafts py-8">
+    <section className="my-crafts py-8 container-center">
       <h2 className="text-3xl font-bold mb-6">My crafts</h2>
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {arts.length &&

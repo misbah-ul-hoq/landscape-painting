@@ -6,8 +6,8 @@ const AllCrafts = () => {
   return loading ? (
     <span className="loading loading-ring loading-lg"></span>
   ) : (
-    <section className="py-8">
-      <h2 className="text-3xl font-bold">All Arts</h2>
+    <section className="py-8 container-center">
+      <h2 className="text-3xl font-bold pb-5">All Arts</h2>
       <div className="cards-wrapper grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {data.map((item) => (
           <div key={item._id} className="card h-56 image-full max-w-96">

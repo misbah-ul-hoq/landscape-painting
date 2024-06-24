@@ -7,3 +7,9 @@
   padding: 1rem;
   pointer-events: auto;
 }
+
+.container-center {
+  width: 93%;
+  max-width: 1240px;
+  margin-inline: auto;
+}
