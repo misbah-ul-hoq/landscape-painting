@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { baseURL } from "../functions/fetchURL";
+import Swal from "sweetalert2";
 
 interface Props {
   _id: string;
@@ -10,9 +12,51 @@ interface Props {
   customization: string;
   stockStatus: string;
 }
-const MyArt = ({ props }: { props: Props }) => {
+const MyArt = ({
+  art,
+  arts,
+  setArts,
+}: {
+  art: Props;
+  arts: any[];
+  setArts: any;
+}) => {
   const { _id, image, itemName, price, rating, customization, stockStatus } =
-    props;
+    art;
+
+  const handleDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`${baseURL}/arts/delete/${_id}`, {
+          method: "DELETE",
+          headers: {
+            "content-type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setArts(arts.filter((item) => item._id != _id));
+            if (data.deletedCount === 1) {
+              Swal.fire({
+                title: "Deleted Successfully",
+                // text: "Art added to database",
+                icon: "success",
+                confirmButtonText: "Ok",
+              });
+            }
+          });
+      }
+    });
+  };
+
   return (
     <div className="max-w- bg-white shadow-lg rounded-lg overflow-hidden">
       <img
@@ -42,7 +86,10 @@ const MyArt = ({ props }: { props: Props }) => {
           >
             Update
           </Link>
-          <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+          <button
+            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+            onClick={handleDelete}
+          >
             Delete
           </button>
         </div>
