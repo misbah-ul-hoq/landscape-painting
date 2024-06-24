@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../Providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -42,6 +43,12 @@ const Login = () => {
     const password = form.get("password");
     logInWithEmailAndPassword(email, password)
       .then(() => {
+        Swal.fire({
+          title: "Success!",
+          text: "Login Successfull",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
         navigate(location.state ? location.state : "/");
       })
       .catch((error) => {

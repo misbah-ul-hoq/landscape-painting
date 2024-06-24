@@ -2,12 +2,10 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../Providers/AuthProvider";
-import { updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
 
 const Signup = () => {
   const {
-    user,
     setLoading,
     signUpWithEmailAndPassword,
     signInWithGoogle,
