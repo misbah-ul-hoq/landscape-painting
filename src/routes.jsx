@@ -9,6 +9,7 @@ import AddCraft from "./pages/AddCraft";
 import MyCrafts from "./pages/MyCrafts";
 import AllCrafts from "./components/AllCrafts";
 import SingleArt from "./pages/SingleArt";
+import UpdateCraft from "./pages/UpdateCraft";
 
 const routes = createBrowserRouter([
   {
@@ -54,6 +55,14 @@ const routes = createBrowserRouter([
           <PrivateRoute>
             {" "}
             <SingleArt />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/arts/update/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateCraft />
           </PrivateRoute>
         ),
       },

@@ -114,6 +114,7 @@ const Nav = () => {
             <Tooltip id="my-tooltip" className="bg-primary p-5">
               <div className="space-y-4">
                 <h3>{user?.displayName || mongoUser?.displayName}</h3>
+                <p>{user?.email}</p>
                 <button
                   className="btn btn-error"
                   onClick={() => {
