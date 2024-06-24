@@ -1,10 +1,20 @@
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 
 const Nav = () => {
-  const { user, signOutUser } = useContext(AuthContext);
+  const { user, loading, signOutUser } = useContext(AuthContext);
+  const [mongoUser, setMongoUser] = useState(null);
+  const userEmail = user?.email;
+  console.log(loading);
+  useEffect(() => {
+    fetch(`https://practisetask-backend.vercel.app/user/${userEmail}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setMongoUser(data);
+      });
+  }, [userEmail]);
 
   const navLinks = (
     <>
@@ -92,18 +102,15 @@ const Nav = () => {
         {user && (
           <>
             <img
-              src={user?.photoURL}
+              src={user?.photoURL || mongoUser?.photoURL}
               data-tooltip-id="my-tooltip"
-              // data-tooltip-content={`
-
-              //   `}
               data-tooltip-delay-hide={2000}
               className="w-11 h-11 rounded-full object-cover"
             />
 
             <Tooltip id="my-tooltip" className="bg-primary p-5">
               <div className="space-y-4">
-                <h3>{user?.displayName}</h3>
+                <h3>{user?.displayName || mongoUser?.displayName}</h3>
                 <button
                   className="btn btn-error"
                   onClick={() => {

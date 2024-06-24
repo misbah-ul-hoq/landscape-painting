@@ -2,16 +2,24 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../Providers/AuthProvider";
+import { updateProfile } from "firebase/auth";
+import Swal from "sweetalert2";
 
 const Signup = () => {
-  const { signUpWithEmailAndPassword, signInWithGoogle, signInWithGithub } =
-    useContext(AuthContext);
+  const {
+    user,
+    setLoading,
+    signUpWithEmailAndPassword,
+    signInWithGoogle,
+    signInWithGithub,
+  } = useContext(AuthContext);
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isMinLength, setIsMinLength] = useState(false);
   const [hasUppercase, setHasUppercase] = useState(false);
   const [hasLowercase, setHasLowercase] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [render, setRender] = useState(false);
 
   const navigate = useNavigate();
 
@@ -53,6 +61,7 @@ const Signup = () => {
     const email = form.get("email");
     const password = form.get("password");
     const photoURL = form.get("photoURL");
+    const userInfo = { displayName, email, password, photoURL };
 
     setErrorMessage("");
 
@@ -69,18 +78,33 @@ const Signup = () => {
       return;
     }
 
+    console.log("component re renders for the value", render);
+
     fetch("https://practisetask-backend.vercel.app/users", {
       method: "POST",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ displayName, email, password, photoURL }),
+      body: JSON.stringify(userInfo),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        setRender(true);
+        console.log(data);
+      });
 
     signUpWithEmailAndPassword(email, password)
-      .then(() => {
+      .then((userCredential) => {
+        const user = userCredential.user;
+        user.photoURL = photoURL;
+        user.displayName = displayName;
+        setLoading(false);
+        Swal.fire({
+          title: "Success!",
+          text: "Register Successfull",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
         // navigate(navigate.state ? navigate.state : "/");
       })
       .catch((error) => {
