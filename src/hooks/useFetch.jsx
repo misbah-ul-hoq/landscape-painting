@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 const useFetch = (
-  url = "https://practisetask-backend.vercel.app/",
   body = {},
-  method = "GET"
+  method = "GET",
+  url = "https://practisetask-backend.vercel.app/"
 ) => {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);

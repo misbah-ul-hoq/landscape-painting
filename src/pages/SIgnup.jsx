@@ -4,12 +4,8 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../Providers/AuthProvider";
 
 const Signup = () => {
-  const {
-    signUpWithEmailAndPassword,
-    signInWithGoogle,
-    signInWithGithub,
-    updateUserProfile,
-  } = useContext(AuthContext);
+  const { signUpWithEmailAndPassword, signInWithGoogle, signInWithGithub } =
+    useContext(AuthContext);
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isMinLength, setIsMinLength] = useState(false);
@@ -72,9 +68,20 @@ const Signup = () => {
       setErrorMessage("Please provide a lowercase letter");
       return;
     }
+
+    fetch("https://practisetask-backend.vercel.app/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ displayName, email, password, photoURL }),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+
     signUpWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        navigate(navigate.state ? navigate.state : "/");
+      .then(() => {
+        // navigate(navigate.state ? navigate.state : "/");
       })
       .catch((error) => {
         setErrorMessage(error.message);
