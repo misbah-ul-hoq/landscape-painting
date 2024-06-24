@@ -11,7 +11,7 @@ const Nav = () => {
   useEffect(() => {
     fetch(`https://practisetask-backend.vercel.app/user/${userEmail}`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         return res.json();
       })
       .then((data) => {

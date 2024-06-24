@@ -13,6 +13,8 @@ const Login = () => {
 
   const location = useLocation();
 
+  console.log(location);
+
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState("");

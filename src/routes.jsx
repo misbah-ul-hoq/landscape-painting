@@ -7,6 +7,8 @@ import Signup from "./pages/SIgnup";
 import PrivateRoute from "./pages/PrivateRoute";
 import AddCraft from "./pages/AddCraft";
 import MyCrafts from "./pages/MyCrafts";
+import AllCrafts from "./components/AllCrafts";
+import SingleArt from "./pages/SingleArt";
 
 const routes = createBrowserRouter([
   {
@@ -39,6 +41,19 @@ const routes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyCrafts />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/all-arts",
+        element: <AllCrafts />,
+      },
+      {
+        path: "/arts/:id",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <SingleArt />
           </PrivateRoute>
         ),
       },
